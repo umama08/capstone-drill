@@ -2,11 +2,11 @@
 
 ## The Drill
 
-I built the same feature — a settings form with Name and Email fields — twice. Round 1 used a single vague prompt ("Add a settings form to this app.") with no context, no constraints, and I accepted the output without reviewing it. Round 2 used a detailed prompt specifying the exact file, the validation rules, the expected error behavior, accessibility requirements (labels), and asked the AI to write and run tests.
+I built the same feature, a settings form with Name and Email fields twice. Round 1 used a single vague prompt ("Add a settings form to this app.") with no context, no constraints, and I accepted the output without reviewing it. Round 2 used a detailed prompt specifying the exact file, the validation rules, the expected error behavior, accessibility requirements (labels), and asked the AI to write and run tests.
 
 ## Correctness
 
-Round 1 produced a form with Name and Email fields and a Save button, but there was no validation logic at all. Leaving Email blank and clicking Save did nothing — no error, no feedback, the "save" just silently succeeded with invalid data.
+Round 1 produced a form with Name and Email fields and a Save button, but there was no validation logic at all. Leaving Email blank and clicking Save did nothing no error, no feedback, the "save" just silently succeeded with invalid data.
 
 Round 2 added real validation: required-field checks and email format checking, with error messages meant to display under each field. However, even in round 2 the AI's output wasn't immediately correct — when I first tested it, the errors weren't appearing on the page at all, even though the console showed no crash. I eventually traced this to two separate issues, not one: first, opening the HTML file directly in the browser (file:// protocol) blocked the JavaScript files from loading due to CORS, which had nothing to do with the AI's code and everything to do with how I was testing it. Once I ran a local server (python -m http.server) and reloaded through it, the actual validation logic worked as expected.
 
